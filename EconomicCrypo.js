@@ -9,7 +9,6 @@
  *
  * This module is for managing crytographic functionalities associated with "EconomicModel.js".
  * Dependencies are: Node.js native crypto and "bcrypt-nodejs" modules.
- * Module is under development (in progress)
  *
  * Note:
  * SHA-2, SHA-512 variant : SHA-512-crypt   -----> SHA-2 =>Secure Hash Algorithm 2
@@ -29,8 +28,6 @@ var  EconomicCrypto = (function cryptoModel()
      //constructor
      function main(){"use strict";}
 
- 
-    
      // check hashing consensus (sync version) with timestamp using either
      // (a) Bcrypt-Nodejs, (b) HMAC-WHIRPOOL or (c) HMAC-SHA512 algorithm
      main.prototype.isHashConsensus = function (sig, hashAlgorithm, compareSig, compareSalt, compareHashSig, compareDateNow)
@@ -42,6 +39,8 @@ var  EconomicCrypto = (function cryptoModel()
          var uuidV4      = require('uuid/v4');       // RFC4122 (Version 4) UUIDs
          var fs          = require('fs');            // a core module for file system
          var bcrypt      = require("bcrypt-nodejs"); // crypto-hashing module
+
+         //check for crypto support
          try
          {
              var crypto = require('crypto');
@@ -49,9 +48,7 @@ var  EconomicCrypto = (function cryptoModel()
          catch (cryptoError)
          {
              console.log('crypto support is disabled or not available!');
-
          }
-
 
          var dateNow = new Date();
 
@@ -99,9 +96,6 @@ var  EconomicCrypto = (function cryptoModel()
                      var combinedHashSigx  = (crypto.scryptSync(combinedSig + dateNow, salt, 64)).toString('hex');
                  }
 
-
-
-
                  return result;
            }
 
@@ -142,7 +136,6 @@ var  EconomicCrypto = (function cryptoModel()
                      for(var i = 0; i < compareSigLen; i ++){combinedSigx +=  (crypto.scryptSync(combinedSig[i], compareSalt, 64)).toString('hex');}
                      var combinedHashSigx  = (crypto.scryptSync(combinedSigx + compareDateNow, compareSalt, 64)).toString('hex');
                  }
-
 
                  // consume results
                  //increase count once any of the hashes is not equal to the "combinedHashSigx" and set result to false
