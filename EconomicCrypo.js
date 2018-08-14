@@ -11,10 +11,10 @@
  * Dependencies are: Node.js native crypto and "bcrypt-nodejs" modules.
  *
  * Note:
- * SHA-2, SHA-512 variant : SHA-512-crypt   -----> Produces 512-bit hash - based on node.js' crypto.createHmac()
- * WHIRLPOOL algorithm    : WHIRLPOOL       -----> Produces 512-bit hash - based on node.js' crypto.createHmac()
- * BCrypt Algorithm       : Bcrypt          ----- >Produces 512-bit hash - based on "bcrypt-nodejs" module
- * SCrypt Algorithm       : Scrypt          ----- >Produces 512-bit hash - based on  node.js' crypto.scrypt()
+ * SHA-512 Algorithm      : SHA-512         -----> based on node.js' crypto.createHmac()
+ * WHIRLPOOL Algorithm    : WHIRLPOOL       -----> based on node.js' crypto.createHmac()
+ * BCrypt Algorithm       : Bcrypt          -----> based on "bcrypt-nodejs" module
+ * SCrypt Algorithm       : Scrypt          -----> based on  node.js' crypto.scrypt()
  * 
  *
  */
