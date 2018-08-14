@@ -7,7 +7,7 @@
  *
  * @License Ends
  *
- * This module is for managing crytographic functionalities associated with "EconomicModel.js".
+ * This module is for managing crytographic functionalities associated with "EconomicModel.js on a "Node.js Server".
  * Dependencies are: Node.js native crypto and "bcrypt-nodejs" modules.
  *
  * Note:
