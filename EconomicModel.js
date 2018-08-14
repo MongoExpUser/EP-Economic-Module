@@ -3,16 +3,24 @@
  *
  *  Copyright © 2015 - present. MongoExpUser
  *
- * License: MIT
+ * License: MIT - See: https://github.com/MongoExpUser/EP-Economic-Module/blob/master/LICENSE
  *
  * @License Ends
  *
+ *
  * Economic model: is based on the DCF (discounted cash flow) model
+ *
  * It follows the approach outlined in the SPE-PRMS 2007 (pages: 13-19) and SPE-PRMS 2011 Guide (Pages 109-127).
- * SPE References: (1) SPE-PRMS (2007). SPE/WPC/AAPG/SPEE - Petroleum resources management system.
- *                     Link: http://www.spe.org/industry/docs/Petroleum_Resources_Management_System_2007.pdf.
- *                 (2) SPE-PRMS Guide. (2011). Guidelines for application of the petroleum resources management system.
- *                     Link: http://www.spe.org/industry/docs/PRMS_Guidelines_Nov2011.pdf.
+ *
+ * SPE-PRMS - Society of Petroluem Engineers - Petroluem Resources Management System
+ *
+ * SPE References: 
+ * (1) SPE-PRMS (2007). SPE/WPC/AAPG/SPEE - Petroleum resources management system.
+ *     Link: http://www.spe.org/industry/docs/Petroleum_Resources_Management_System_2007.pdf.
+ *
+ * (2) SPE-PRMS Guide. (2011). Guidelines for application of the petroleum resources management system.
+ *     Link: http://www.spe.org/industry/docs/PRMS_Guidelines_Nov2011.pdf.
+ *
  */
 
 
