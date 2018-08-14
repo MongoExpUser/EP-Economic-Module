@@ -3,7 +3,7 @@
  *
  * Copyright © 2015 - present. MongoExpUser
  *
- * License: MIT
+ * License: MIT - See: https://github.com/MongoExpUser/EP-Economic-Module/blob/master/LICENSE
  *
  * @License Ends
  *
