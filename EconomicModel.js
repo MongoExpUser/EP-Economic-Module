@@ -24,29 +24,28 @@ var  EconomicModel = (function ecoModel()
                      (2)  SPE-PRMS Guide. (2011). Guidelines for application of the petroleum resources management system.
                          Link: http://www.spe.org/industry/docs/PRMS_Guidelines_Nov2011.pdf.
     */
+    
     main.prototype.economicModel = function (inputData, prodFunction, reservoirType, testing)
     {
          "use strict";
 
-
-           //A: C/C++ Addons using V8 or NAPI engine: for IRR and PBR methods
-           var addonEco  =  require('bindings')('addonEco.node');       //require addonEco.node using helper function
-           //B: alternative native implementation of IRR and PBR
-           //var cashFlowArray = []; //ensure array is populated for using it.
-           //IRR(cashFlowArray);     //a method for calculating internal rate of return (IRR)
-           //PBP(cashFlowArray)      //a method for calculating payback period (PBP)
-        //Note about economics inputs (capex and opex)
-        //Capex = Capitalized expenditure/cost: Well drilling & comp. (D&C) & processing facilities - both tangible [C1a]  +  intangible D&C [C1b]  +  Other tangibles [C2]
-        //Other tangibles include:  expl.  & acquisition [C2a] +  leasehold bonus[C2b] + extra loan interest above discount, if any [C2c]? + Aba & Recl. [C2d] + Envr. [C2e] + other miscellan. [C2f]: vehicles/motors, furnitures & fittings, buildings, plants (i.e.machineries & equipments, etc.)
-        //Well cost could be depreciated/amortized over lease life (or a specficied time) using straight-line method instead of deductions/expensing in year 0.
-        //Other tangible costs could also be depreciated over lease life (or a specficied time) using straight-line method instead of deductions/expensing in year 0.
-        //Amortization for intangile assest & depreciation for tangible assest (both included under depletion allowance)
-        //Intangible DC expenditures are treated like regular expenses and are deductible in year incurred
-        //Opex = LOE + GAT + G&A
-        //LOE  = fixed & variable (labor + water disposal + fuel + others - materials, maintenance, supplies, insurance, etc.)
-        //GAT  = gathering and transportation expenses
-        //G&A  = general and administrative expenses, including management, finance and accounting professional fees, etc.  (i.e OVERHEAD)
-        //default input array values for testing codes
+          //IRR and PBR methods using C/C++ Addons using V8 or NAPI engines
+          var addonEco  =  require('bindings')('addonEco.node');       //require addonEco.node using helper function
+      
+           
+            //Note about economics inputs (capex and opex)
+            //Capex = Capitalized expenditure/cost: Well drilling & comp. (D&C) & processing facilities - both tangible [C1a]  +  intangible D&C [C1b]  +  Other tangibles [C2]
+            //Other tangibles include:  expl.  & acquisition [C2a] +  leasehold bonus[C2b] + extra loan interest above discount, if any [C2c]? + Aba & Recl. [C2d] + Envr. [C2e] + other miscellan. [C2f]: vehicles/motors, furnitures & fittings, buildings, plants (i.e.machineries & equipments, etc.)
+            //Well cost could be depreciated/amortized over lease life (or a specficied time) using straight-line method instead of deductions/expensing in year 0.
+            //Other tangible costs could also be depreciated over lease life (or a specficied time) using straight-line method instead of deductions/expensing in year 0.
+            //Amortization for intangile assest & depreciation for tangible assest (both included under depletion allowance)
+            //Intangible DC expenditures are treated like regular expenses and are deductible in year incurred
+            //Opex = LOE + GAT + G&A
+            //LOE  = fixed & variable (labor + water disposal + fuel + others - materials, maintenance, supplies, insurance, etc.)
+            //GAT  = gathering and transportation expenses
+            //G&A  = general and administrative expenses, including management, finance and accounting professional fees, etc.  (i.e OVERHEAD)
+            //default input array values for testing codes
+        
         if(testing)
         {
             //cost - capex
