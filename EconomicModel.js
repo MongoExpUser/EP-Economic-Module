@@ -29,7 +29,7 @@ var  EconomicModel = (function ecoModel()
     {
          "use strict";
 
-          //IRR and PBR methods using C/C++ Addons using V8 or NAPI engines
+          //IRR and PBR methods using C/C++ Addons (implemenation with V8 or NAPI)
           var addonEco  =  require('bindings')('addonEco.node');       //require addonEco.node using helper function
       
            
