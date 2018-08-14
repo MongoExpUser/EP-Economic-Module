@@ -23,29 +23,7 @@
 //create module: through creation and execution of named or anonymous function with IIFE
 var  EconomicCrypto = (function cryptoModel()
 {
-    "use strict";
-
-    //constructor
-    function main(){}
     
-    //private function
-    function test()
-    {
-   
-    }
-    
-    //public function
-    main.prototype.createChain = function (signature, compareSignature)
-    {
-     
-    }
-    
-   
-    //export all prototype functions on main
-    module.exports = main;
-
-    //return constructor to make all properties associated with it PUBLIC
-    return main;
 
 
 }());
