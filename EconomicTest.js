@@ -22,7 +22,7 @@ EconomicTest = (function economicTest(){
   
   
     //add test codes later: IP_PROGRESS
-    main.prototype.testEPeconomich = function (arguments)
+    main.prototype.testEPeconomic = function (arguments)
     {
       //add test codes later: IP_PROGRESS
       
