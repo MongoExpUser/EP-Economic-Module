@@ -15,6 +15,8 @@
  *                     Link: http://www.spe.org/industry/docs/PRMS_Guidelines_Nov2011.pdf.
  */
 
+var x = 0;
+
 //create and execute named or anonymous function with IIFE
 var  EconomicModel = (function ecoModel()
 {
