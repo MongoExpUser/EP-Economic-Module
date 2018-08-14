@@ -157,6 +157,7 @@ var  EconomicCrypto = (function cryptoModel()
  module.exports = main;
 
  //return main to make its objects accessible
+ return main;
 
 
 }());
