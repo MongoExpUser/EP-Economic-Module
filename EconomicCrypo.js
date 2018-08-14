@@ -20,7 +20,7 @@
 
 
 //create module: through creation and execution of named or anonymous function with IIFE
-var  EconomicCrypto = (function cryptoModel()
+var  EconomicCrypto = (function economicCrypto()
 {
     
      'use strict';
