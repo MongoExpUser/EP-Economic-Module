@@ -11,8 +11,7 @@
   
   
   
-//create module: through creation and execution of named or anonymous function with IIFEvar 
-
+//create module: through creation and execution of named or anonymous function with IIFE
 EconomicTest = (function economicTest(){
 {
 
@@ -28,7 +27,6 @@ EconomicTest = (function economicTest(){
       //add test codes later: IP_PROGRESS
       
     }    
-  
   
   
     //export all prototype functions on main
