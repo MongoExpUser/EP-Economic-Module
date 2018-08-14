@@ -11,10 +11,11 @@
  * Dependencies are: Node.js native crypto and "bcrypt-nodejs" modules.
  *
  * Note:
- * SHA-2, SHA-512 variant : SHA-512-crypt   -----> SHA-2 =>Secure Hash Algorithm 2
+ * SHA-2, SHA-512 variant : SHA-512-crypt   -----> Produces 512-bit hash - based on node.js' crypto.createHmac()
  * WHIRLPOOL algorithm    : WHIRLPOOL       -----> Produces 512-bit hash - based on node.js' crypto.createHmac()
  * BCrypt Algorithm       : Bcrypt          ----- >Produces 512-bit hash - based on "bcrypt-nodejs" module
- *
+ * SCrypt Algorithm       : Scrypt          ----- >Produces 512-bit hash - based on  node.js' crypto.scrypt()
+ * 
  *
  */
 
@@ -29,7 +30,7 @@ var  EconomicCrypto = (function economicCrypto()
      function main(){var crypy = null;}
 
      // check hashing consensus (sync version) with timestamp using either
-     // (a) Bcrypt-Nodejs, (b) HMAC-WHIRPOOL or (c) HMAC-SHA512 algorithm
+     // (a) Bcrypt-Nodejs, (b) HMAC-WHIRPOOL (c) HMAC-SHA512 algorithm or (4) Scrypt algorithm
      main.prototype.isHashConsensus = function (sig, hashAlgorithm, compareSig, compareSalt, compareHashSig, compareDateNow)
      {
          var uuidV4      = require('uuid/v4');       // RFC4122 (Version 4) UUIDs
