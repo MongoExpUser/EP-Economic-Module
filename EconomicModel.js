@@ -6,33 +6,29 @@
  * License: MIT
  *
  * @License Ends
-*/
+ *
+ * Economic model: is based on the DCF (discounted cash flow) model
+ * It follows the approach outlined in the SPE-PRMS 2007 (pages: 13-19) and SPE-PRMS 2011 Guide (Pages 109-127).
+ * SPE References: (1) SPE-PRMS (2007). SPE/WPC/AAPG/SPEE - Petroleum resources management system.
+ *                     Link: http://www.spe.org/industry/docs/Petroleum_Resources_Management_System_2007.pdf.
+ *                 (2) SPE-PRMS Guide. (2011). Guidelines for application of the petroleum resources management system.
+ *                     Link: http://www.spe.org/industry/docs/PRMS_Guidelines_Nov2011.pdf.
+ */
+
 //create and execute named or anonymous function with IIFE
 var  EconomicModel = (function ecoModel()
 {
     "use strict";
 
-
     //Constructor
-    function main(){ "use strict";}
+    function main(){ }
 
-    /*
-     Economic model: is based on the DCF (discounted cash flow) model
-     It follows the approach outlined in the SPE-PRMS 2007 (pages: 13-19) and SPE-PRMS 2011 Guide (Pages 109-127).
-     SPE References: (1) SPE-PRMS (2007). SPE/WPC/AAPG/SPEE - Petroleum resources management system.
-                         Link: http://www.spe.org/industry/docs/Petroleum_Resources_Management_System_2007.pdf.
-                     (2)  SPE-PRMS Guide. (2011). Guidelines for application of the petroleum resources management system.
-                         Link: http://www.spe.org/industry/docs/PRMS_Guidelines_Nov2011.pdf.
-    */
-    
+
     main.prototype.economicModel = function (inputData, prodFunction, reservoirType, testing)
     {
-         "use strict";
-
           //IRR and PBR methods using C/C++ Addons (implemenation with V8 or NAPI)
           var addonEco  =  require('bindings')('addonEco.node');       //require addonEco.node using helper function
-      
-           
+            
             //Note about economics inputs (capex and opex)
             //Capex = Capitalized expenditure/cost: Well drilling & comp. (D&C) & processing facilities - both tangible [C1a]  +  intangible D&C [C1b]  +  Other tangibles [C2]
             //Other tangibles include:  expl.  & acquisition [C2a] +  leasehold bonus[C2b] + extra loan interest above discount, if any [C2c]? + Aba & Recl. [C2d] + Envr. [C2e] + other miscellan. [C2f]: vehicles/motors, furnitures & fittings, buildings, plants (i.e.machineries & equipments, etc.)
@@ -44,8 +40,10 @@ var  EconomicModel = (function ecoModel()
             //LOE  = fixed & variable (labor + water disposal + fuel + others - materials, maintenance, supplies, insurance, etc.)
             //GAT  = gathering and transportation expenses
             //G&A  = general and administrative expenses, including management, finance and accounting professional fees, etc.  (i.e OVERHEAD)
-            //default input array values for testing codes
+            
         
+        
+        //default "inputData" array values for testing codes
         if(testing)
         {
             //cost - capex
