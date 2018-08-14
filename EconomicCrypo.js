@@ -32,8 +32,6 @@ var  EconomicCrypto = (function cryptoModel()
      // (a) Bcrypt-Nodejs, (b) HMAC-WHIRPOOL or (c) HMAC-SHA512 algorithm
      main.prototype.isHashConsensus = function (sig, hashAlgorithm, compareSig, compareSalt, compareHashSig, compareDateNow)
      {
-         //require (load) all necessary modules: these are private and shared by all objects
-         global.Promise  = require('bluebird');      // replace global.promise module with blue bird
          var uuidV4      = require('uuid/v4');       // RFC4122 (Version 4) UUIDs
          var fs          = require('fs');            // a core module for file system
          var bcrypt      = require("bcrypt-nodejs"); // crypto-hashing module
