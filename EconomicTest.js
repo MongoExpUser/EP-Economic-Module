@@ -5,7 +5,7 @@
 * 
 * @License Ends 
 * 
-* This module is for testing the EP-Economic functionalities
+* This module is for testing the EP-Economic functionalities in: EconomicModel.js and EconomicCrypto.js modules
 *
 */
   
