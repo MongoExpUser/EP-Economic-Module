@@ -34,7 +34,7 @@ var  EconomicModel = (function ecoModel()
     function main(){ }
 
 
-    main.prototype.economicModel = function (inputData, prodFunction, reservoirType, testing)
+    main.prototype.economicModel = function (inputDataActual, prodFunction, reservoirType, testing)
     {
           //IRR and PBR methods using C/C++ Addons (implemenation with V8 or NAPI)
           var addonEco  =  require('bindings')('addonEco.node');       //require addonEco.node using helper function
@@ -52,10 +52,13 @@ var  EconomicModel = (function ecoModel()
             //G&A  = general and administrative expenses, including management, finance and accounting professional fees, etc.  (i.e OVERHEAD)
             
         
+        var inputData = [];
+        
+        //actual "inputData" array values 
+        if(testing === null || testing === undefined){var inputData = inputDataActual;}
         
         //default "inputData" array values for testing codes
-        if(testing)
-        {
+        if(testing !== null && testing !== undefined)
             //cost - capex
             inputData[0]  = 6+1;         //dacMMUSD         = inputData[0];     //drilling and completion ($MM)
             inputData[1]  = 1.00;        //dacTanPer        = inputData[1];     //percentage of drilling and completion that is intangible
