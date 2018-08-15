@@ -38,12 +38,12 @@ EconomicTest = (function economicTest(){
             
         console.log();
         console.log('------------Testing Crypto Starts--------------------------');
-        var sigPath11        = './filePath/file-1.png';                     //path of file to hash - with read
-        var sigPath22        = './filePath/file-2.pdf';                     //path of file to hash - with read
-        var sig1             = fs.readFileSync(sigPath11);                  //file to hash
-        var sig2             = fs.readFileSync(sigPath22);                  //file to hash
-        var sig3             = "MongoExpUser";                              //string to hash
-        var sig              = [sig1, sig2, sig3];                          //array of items to hash
+        var sigPath1        = 'file-1.png';                                //path of file to hash - with read
+        var sigPath2        = 'file-2.pdf';                                //path of file to hash - with read
+        var sig1             = fs.readFileSync(sigPath1);                  //file to hash
+        var sig2             = fs.readFileSync(sigPath2);                  //file to hash
+        var sig3             = "MongoExpUser";                             //string to hash
+        var sig              = [sig1, sig2, sig3];                         //array of items to hash
             
         var hashAlgorithm1   = 'bcrypt';
         var hashAlgorithm2   = 'sha512';
