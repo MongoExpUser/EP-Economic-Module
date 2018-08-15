@@ -32,7 +32,7 @@ EconomicTest = (function economicTest(){
     {
         var fs                    = require('fs');
         var path                  = require('path');
-        var economicCrypto.js        = require('EconomicCrypto.js');
+        var economicCrypto.js     = require('EconomicCrypto.js');
             
         console.log();
         console.log('------------Testing Crypto Starts--------------------------');
@@ -48,16 +48,17 @@ EconomicTest = (function economicTest(){
         var hashAlgorithm2   = 'sha512';
         var hashAlgorithm3   = 'whirlpool';
         var hashAlgorithm4   = 'scrypt';
-        var toInspect1       = cryptoEconomic;
+        var toInspect1       = economicCrypto;
+      
         console.log(require('util').inspect(toInspect, { showHidden: true, colors: true, depth: 4 })); //print structure
                
-        var blockhain        = new cryptoEconomic().isHashConsensus(sig, hashAlgorithm1);
+        var blockhain        = new economicCrypto().isHashConsensus(sig, hashAlgorithm1);
         var priorBlockchains = [blockhain[1], blockhain[1], blockhain[1]];
         var compareSig       = sig;
         var compareSalt      = blockhain[0];
         var compareHashSig   = priorBlockchains;
         var compareDateNow   = blockhain[2];
-        var newBlockhain     = new cryptoEconomic().isHashConsensus(sig, hashAlgorithm1, compareSig, compareSalt, compareHashSig, compareDateNow);
+        var newBlockhain     = new economicCrypto().isHashConsensus(sig, hashAlgorithm1, compareSig, compareSalt, compareHashSig, compareDateNow);
         console.log("chain - salt, hash, time :");
         console.log(blockhain);
         console.log();
