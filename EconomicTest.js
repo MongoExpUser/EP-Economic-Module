@@ -24,10 +24,10 @@ EconomicTest = (function economicTest(){
     //add test codes later: IP_PROGRESS
     main.prototype.testingEconomicModel = function (arguments)
     {
-      var economicNodel = require('EconomicModel.js');
+      var econModel = require('EconomicModel.js');
       inputDataActual = [0];
       prodFunction    = [[0, 2, 4, 6], [0, 20, 200, 200]];
-      new economicNodel().economicModel(inputDataActual, prodFunction, "viscous", null)
+      new econModel().economicModel(inputDataActual, prodFunction, "tight", null);
     }
         
     main.prototype.testingEconomicCrypto = function ()
