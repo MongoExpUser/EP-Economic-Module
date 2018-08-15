@@ -15,7 +15,7 @@
  * SPE-PRMS - Society of Petroluem Engineers - Petroluem Resources Management System
  *
  * SPE References: 
- * (1) SPE-PRMS (2007). SPE/WPC/AAPG/SPEE - Petroleum resources management system.
+ * (1) SPE-PRMS (2018). SPE/WPC/AAPG/SPEE - Petroleum resources management system.
  *     Link: https://www.spe.org/en/industry/petroleum-resources-management-system-2018
  *
  * (2) SPE-PRMS Guide. (2011). Guidelines for application of the petroleum resources management system.
