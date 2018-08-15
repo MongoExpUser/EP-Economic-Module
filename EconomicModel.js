@@ -55,10 +55,13 @@ var  EconomicModel = (function ecoModel()
         var inputData = [];
         
         //actual "inputData" array values 
-        if(testing === null || testing === undefined){var inputData = inputDataActual;}
+        if(testing !== null && testing !== undefined && Array.isArray(inputDataActual) === true)
+        {
+            var inputData = inputDataActual;
+        }
         
-        //default "inputData" array values for testing codes
-        if(testing !== null && testing !== undefined)
+        //default "inputData" array values -> for testing codes
+        if(testing === null || testing === undefined || Array.isArray(inputDataActual) !== true)
             //cost - capex
             inputData[0]  = 6+1;         //dacMMUSD         = inputData[0];     //drilling and completion ($MM)
             inputData[1]  = 1.00;        //dacTanPer        = inputData[1];     //percentage of drilling and completion that is intangible
