@@ -10,16 +10,16 @@
  *
  * Economic model: is based on the DCF (discounted cash flow) model
  *
- * It follows the approach outlined in the SPE-PRMS 2007 (pages: 13-19) and SPE-PRMS 2011 Guide (Pages 109-127).
+ * It follows the approach outlined in the SPE-PRMS 2018 Updates (pages: 17-24) and SPE-PRMS 2011 Guide (Pages 109-127).
  *
  * SPE-PRMS - Society of Petroluem Engineers - Petroluem Resources Management System
  *
  * SPE References: 
  * (1) SPE-PRMS (2007). SPE/WPC/AAPG/SPEE - Petroleum resources management system.
- *     Link: http://www.spe.org/industry/docs/Petroleum_Resources_Management_System_2007.pdf.
+ *     Link: https://www.spe.org/en/industry/petroleum-resources-management-system-2018
  *
  * (2) SPE-PRMS Guide. (2011). Guidelines for application of the petroleum resources management system.
- *     Link: http://www.spe.org/industry/docs/PRMS_Guidelines_Nov2011.pdf.
+ *     Link: http://www.spe.org/industry/docs/PRMS_Guidelines_Nov2011.pdf
  *
  *
  */
