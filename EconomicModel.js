@@ -18,7 +18,7 @@
  * (1) SPE-PRMS (2018). SPE/WPC/AAPG/SPEE - Petroleum resources management system.
  *     Link: https://www.spe.org/en/industry/petroleum-resources-management-system-2018
  *
- * (2) SPE-PRMS Guide. (2011). Guidelines for application of the petroleum resources management system.
+ * (2) SPE-PRMS Guidelines. (2011). Guidelines for application of the petroleum resources management system.
  *     Link: http://www.spe.org/industry/docs/PRMS_Guidelines_Nov2011.pdf
  *
  *
