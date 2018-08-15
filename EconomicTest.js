@@ -25,7 +25,9 @@ EconomicTest = (function economicTest(){
     main.prototype.testingEconomicModel = function (arguments)
     {
       var economicNodel = require('EconomicModel.js');
-      new economicNodel().YUU()
+      inputDataActual = [0];
+      prodFunction    = [[0, 2, 4, 6], [0, 20, 200, 200]];
+      new economicNodel().economicModel(inputDataActual, prodFunction, "viscous", null)
     }
         
     main.prototype.testingEconomicCrypto = function ()
@@ -82,6 +84,6 @@ EconomicTest = (function economicTest(){
     (function testAll(option)
     {
        'use strict';
-       new EconomicTest().testingtestingEconomicModel();  // 1. EconomicModel testing
-       new EconomicTest().testingEconomicCrypto();        // 2. EconomicCrypto testing
+       new EconomicTest().testingEconomicModel();   // 1. EconomicModel testing
+       new EconomicTest().testingEconomicCrypto();  // 2. EconomicCrypto testing
     }());
