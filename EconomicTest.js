@@ -5,7 +5,7 @@
 * 
 * @License Ends 
 * 
-* This module is for testing the EP-Economic functionalities in: EconomicModel.js and EconomicCrypto.js modules
+* This module is for testing the EP-Economic functionalities in: EconomicModel.js and EconomicCrypto.js
 *
 */
   
@@ -24,11 +24,11 @@ EconomicTest = (function economicTest(){
     //add test codes later: IP_PROGRESS
     main.prototype.testingEconomicModel = function (arguments)
     {
-      //add test codes later: IP_PROGRESS
-      
-    }    
+      var economicNodel = require('EconomicModel.js');
+      new economicNodel().YUU()
+    }
         
-    main.prototype.testingCryptoModel = function ()
+    main.prototype.testingEconomicCrypto = function ()
     {
         var fs                    = require('fs');
         var path                  = require('path');
@@ -38,10 +38,9 @@ EconomicTest = (function economicTest(){
         console.log('------------Testing Crypto Starts--------------------------');
         var sigPath11        = './filePath/file-1.png';                     //path of file to hash - with read
         var sigPath22        = './filePath/file-2.pdf';                     //path of file to hash - with read
-        var sigPath33        = './filePath/file-3.pdf';                     //path of file to hash - with read
         var sig1             = fs.readFileSync(sigPath11);                  //file to hash
         var sig2             = fs.readFileSync(sigPath22);                  //file to hash
-        var sig3             = 'yu';                                        //string to hash
+        var sig3             = "MongoExpUser";                              //string to hash
         var sig              = [sig1, sig2, sig3];                          //array of items to hash
             
         var hashAlgorithm1   = 'bcrypt';
@@ -77,3 +76,12 @@ EconomicTest = (function economicTest(){
     return main;
 
 }());
+  
+  
+    //invoke test as IIFE
+    (function testAll(option)
+    {
+       'use strict';
+       new EconomicTest().testingtestingEconomicModel();  // 1. EconomicModel testing
+       new EconomicTest().testingEconomicCrypto();        // 2. EconomicCrypto testing
+    }());
