@@ -10,18 +10,14 @@
 */
   
   
-  
-//create module: through creation and execution of named or anonymous function with IIFE
+//create object with "Prototype" and "Module Pattern (i.e. IIFE & object return) 
 EconomicTest = (function economicTest(){
 {
-
     'use strict';
 
     //constructor
-    function main(){var test = undefined} 
+    function main(){var testEcon = null;} 
   
-  
-    //add test codes later: IP_PROGRESS
     main.prototype.testingEconomicModel = function (arguments)
     {
       var econModel = require('EconomicModel.js');
@@ -38,8 +34,8 @@ EconomicTest = (function economicTest(){
             
         console.log();
         console.log('------------Testing Crypto Starts--------------------------');
-        var sigPath1        = 'file-1.png';                                //path of file to hash - with read
-        var sigPath2        = 'file-2.pdf';                                //path of file to hash - with read
+        var sigPath1        = 'file-1.png';                                //path of file to hash 
+        var sigPath2        = 'file-2.pdf';                                //path of file to hash
         var sig1             = fs.readFileSync(sigPath1);                  //file to hash
         var sig2             = fs.readFileSync(sigPath2);                  //file to hash
         var sig3             = "MongoExpUser";                             //string to hash
@@ -49,9 +45,9 @@ EconomicTest = (function economicTest(){
         var hashAlgorithm2   = 'sha512';
         var hashAlgorithm3   = 'whirlpool';
         var hashAlgorithm4   = 'scrypt';
-        var toInspect1       = economicCrypto;
+        var toInspect       = economicCrypto;
       
-        console.log(require('util').inspect(toInspect, { showHidden: true, colors: true, depth: 4 })); //print structure
+        console.log(require('util').inspect(toInspect, { showHidden: true, colors: true, depth: 4 })); //print structure: a confirmation test
                
         var blockhain        = new economicCrypto().isHashConsensus(sig, hashAlgorithm1);
         var priorBlockchains = [blockhain[1], blockhain[1], blockhain[1]];
@@ -76,7 +72,6 @@ EconomicTest = (function economicTest(){
 
     //return main to make its objects accessible
     return main;
-
 }());
   
   
