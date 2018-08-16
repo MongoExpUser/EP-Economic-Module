@@ -20,7 +20,7 @@
  */
 
 
-//create module: through creation and execution of named or anonymous function with IIFE
+//create object with "Prototype" and "Module Pattern (i.e. IIFE & object return) 
 var  EconomicCrypto = (function economicCrypto()
 {
     
