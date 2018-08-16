@@ -20,7 +20,7 @@
  */
 
 
-//create object with "Prototype" and "Module Pattern (i.e. IIFE & object return) 
+//create object with "Prototype" and "Module Pattern (i.e. IIFE & object return)" 
 var  EconomicCrypto = (function economicCrypto()
 {
     
