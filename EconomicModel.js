@@ -25,7 +25,7 @@
  */
 
 
-//create and execute named or anonymous function with IIFE
+//create object with "Prototype" and "Module Pattern (i.e. IIFE & object return) 
 var  EconomicModel = (function ecoModel()
 {
     "use strict";
