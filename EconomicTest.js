@@ -34,7 +34,7 @@ EconomicTest = (function economicTest(){
     {
         var fs                    = require('fs');
         var path                  = require('path');
-        var economicCrypto.js     = require('EconomicCrypto.js');
+        var economicCrypto        = require('EconomicCrypto.js');
             
         console.log();
         console.log('------------Testing Crypto Starts--------------------------');
