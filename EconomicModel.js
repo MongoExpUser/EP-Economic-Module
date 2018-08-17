@@ -364,9 +364,7 @@ var  EconomicModel = (function ecoModel()
         //1 - cash flow vs time   (net revenue-2a, PV-10x and NPV-discounted PV-11y)
         //2 - cash flow break out (capex-4i, opex-2b, education tax-8iv, income tax-7iii, NCF retained - AITDA-9v)
         //3 - profitability indicator (undis. IRR-12j, discounted IRR-13k and VIR/PI-14l)
-        //print economic results
-        printSummary(addonEcotertURPPS, EFT, EFTLen, EFT21, EFT24, EFT26, EFT27, EFT28, discountWACC);
-
+        
 
         //return the economics table to enable accessibility and printout
         return EFT;
