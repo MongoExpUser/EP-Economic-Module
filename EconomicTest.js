@@ -18,11 +18,11 @@ EconomicTest = (function economicTest(){
     //constructor
     function main(){var testEcon = null;} 
   
-    main.prototype.testingEconomicModel = function (arguments)
+    main.prototype.testingEconomicModel = function ()
     {
       var econModel = require('EconomicModel.js');
-      inputDataActual = [0];
-      prodFunction    = [[0, 2, 4, 6], [0, 20, 200, 200]];
+      var inputDataActual = [0];
+      var prodFunction    = [[0, 2, 4, 6], [0, 20, 200, 200]];
       new econModel().economicModel(inputDataActual, prodFunction, "tight", null);
     }
         
@@ -30,7 +30,7 @@ EconomicTest = (function economicTest(){
     {
         var fs                    = require('fs');
         var path                  = require('path');
-        var economicCrypto        = require('EconomicCrypto.js');
+        var econCrypto            = require('EconomicCrypto.js');
             
         console.log();
         console.log('------------Testing Crypto Starts--------------------------');
@@ -45,17 +45,17 @@ EconomicTest = (function economicTest(){
         var hashAlgorithm2   = 'sha512';
         var hashAlgorithm3   = 'whirlpool';
         var hashAlgorithm4   = 'scrypt';
-        var toInspect       = economicCrypto;
+        var toInspect        = econCrypto;
       
         console.log(require('util').inspect(toInspect, { showHidden: true, colors: true, depth: 4 })); //print structure: a confirmation test
                
-        var blockhain        = new economicCrypto().isHashConsensus(sig, hashAlgorithm1);
+        var blockhain        = new econCrypto().isHashConsensus(sig, hashAlgorithm1);
         var priorBlockchains = [blockhain[1], blockhain[1], blockhain[1]];
         var compareSig       = sig;
         var compareSalt      = blockhain[0];
         var compareHashSig   = priorBlockchains;
         var compareDateNow   = blockhain[2];
-        var newBlockhain     = new economicCrypto().isHashConsensus(sig, hashAlgorithm1, compareSig, compareSalt, compareHashSig, compareDateNow);
+        var newBlockhain     = new econCrypto().isHashConsensus(sig, hashAlgorithm1, compareSig, compareSalt, compareHashSig, compareDateNow);
         console.log("chain - salt, hash, time :");
         console.log(blockhain);
         console.log();
