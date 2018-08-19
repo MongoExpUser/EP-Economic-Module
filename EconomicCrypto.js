@@ -90,8 +90,10 @@ var  EconomicCrypto = (function economicCrypto()
                  if(hashAlgorithm === "scrypt")
                  {
                      for(var i = 0; i < sigLen; i ++){combinedSig +=  (crypto.scryptSync(sig[i], salt, 64)).toString('hex');}
-                     var combinedHashSigx  = (crypto.scryptSync(combinedSig + dateNow, salt, 64)).toString('hex');
+                     var combinedHashSig  = (crypto.scryptSync(combinedSig + dateNow, salt, 64)).toString('hex');
                  }
+             
+                 var result = [salt, combinedHashSig, dateNow];
 
                  return result;
            }
