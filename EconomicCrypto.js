@@ -1,4 +1,3 @@
-
 /* @License Starts
  *
  * Copyright © 2015 - present. MongoExpUser
@@ -11,77 +10,133 @@
  * Dependencies are: Node.js native crypto and "bcrypt-nodejs" modules.
  *
  * Note:
- * SHA-512 Algorithm      : SHA-512         -----> based on node.js' crypto.createHmac()
- * WHIRLPOOL Algorithm    : WHIRLPOOL       -----> based on node.js' crypto.createHmac()
- * BCrypt Algorithm       : Bcrypt          -----> based on "bcrypt-nodejs" module
- * SCrypt Algorithm       : Scrypt          -----> based on  node.js' crypto.scrypt()
- * 
+ * a) SHA-512 Algorithm      : SHA-512         -----> based on node.js' crypto.createHmac() - depends on OpenSSL version
+ * b) WHIRLPOOL Algorithm    : WHIRLPOOL       -----> based on node.js' crypto.createHmac() - depends on OpenSSL version
+ * c) BCrypt Algorithm       : Bcrypt          -----> based on "bcrypt-nodejs" module
+ * d) SCrypt Algorithm       : Scrypt          -----> based on  node.js' crypto.scrypt()
+ *
+ * Node.js' crypo algorithm (for crypto.createHmac()) is dependent on the available algorithms supported by the version of OpenSSL on the platform.
+ *
+ * To check available crypo algorithms (for crypto.createHmac()):
+ *
+ * Option 1 - Within Node.js application file:
+ *   var crypto = require('crypto');
+ *   console.log(crypto.getHashes());
+ *
+ * Option 2 - On Ubuntu/Linux. From shell, run:
+ *   openssl list -digest-algorithms
  *
  */
 
-class  EcotertCrypto
+
+class  EconomicCrypto
 {
     constructor(){ }
+    
+    static commonModules()
+    {
+       return {
+           globalPromise: require('bluebird'),
+           uuidV4: require('uuid/v4'),
+           bcrypt: require("bcrypt-nodejs"),
+           fs: require('fs'),
+           crypto: require('crypto')
+       }
+    }
+    
+    static isCryptoSupported(showAlgorithm)
+    {
+        try
+        {
+            var commonModules = EconomicCrypto.commonModules();
+            var crypto = commonModules.crypto;
+        }
+        catch(cryptoError)
+        {
+            console.log('crypto support is disabled or not available!');
+            return;
+        }
+        finally
+        {
+            // show (print) available hash (i.e. digest) algorithms in OpenSSL version bundled  with the current Node.js version
+            if(showAlgorithm == true)
+            {
+              var hashesAlgorithms = crypto.getHashes();
+              console.log(hashesAlgorithms);
+            }
+            return true;
+        }
+    }
 
     blockchainHash(sig, hashAlgorithm, compareSig, compareSalt, compareHashSig, compareDateNow)
     {
-        global.Promise  = require('bluebird');     
-        var uuidV4      = require('uuid/v4');        
-        var fs          = require('fs');            
-        var bcrypt      = require("bcrypt-nodejs"); 
-        try {var crypto = require('crypto'); } catch (cryptoError) {console.log('crypto support is disabled or not available!'); }
-        var ecoCrypto = new EcotertCrypto();
-        var bc = ecoCrypto.isHashConsensus(sig, hashAlgorithm, compareSig, compareSalt, compareHashSig, compareDateNow);
-        var dbCall1 = null;
-        var rehash = ecoCrypto.isHashConsensus(sig, hashAlgorithm);
-        var dbCall2 = null;
-        return [rehash];
+        var commonModules = EconomicCrypto.commonModules();
+        global.Promise    = commonModules.globalPromise;
+        var uuidV4        = commonModules.uuidV4;
+        var bcrypt        = commonModules.bcrypt;
+        var fs            = commonModules.fs;
+        var showAlgorithm = false;
+        
+        if(EconomicCrypto.isCryptoSupported(showAlgorithm) === true)
+        {
+            var economicCrypto = new EconomicCrypto();
+            var rehash = economicCrypto.isHashConsensus(sig, hashAlgorithm);
+            return [rehash];
+        }
     }
-    
    
     isHashConsensus(sig, hashAlgorithm, compareSig, compareSalt, compareHashSig, compareDateNow)
     {
-        global.Promise  = require('bluebird');      
-        var uuidV4      = require('uuid/v4');       // alternative to node.js' crypto.getRandomBytes
-        var fs          = require('fs');            
-        var bcrypt      = require("bcrypt-nodejs"); 
-        try {var crypto = require('crypto'); } catch (cryptoError) {console.log('crypto support is disabled or not available!'); }
-        var dateNow = new Date();
+        var commonModules = EconomicCrypto.commonModules();
+        global.Promise    = commonModules.globalPromise;
+        var uuidV4        = commonModules.uuidV4;
+        var bcrypt        = commonModules.bcrypt;
+        var fs            = commonModules.fs;
+        var showAlgorithm = true;
         
-        if(hashAlgorithm !== "bcrypt" && hashAlgorithm !== "whirlpool" && hashAlgorithm !== "sha512" ){hashAlgorithm = "whirlpool"}
-        
-        if(sig && hashAlgorithm && !compareSig && !compareSalt && !compareHashSig && !compareDateNow)
+        if(EconomicCrypto.isCryptoSupported(showAlgorithm) === true)
         {
+            var dateNow = new Date();
+
+            if(hashAlgorithm !== "bcrypt" && hashAlgorithm !== "whirlpool" && hashAlgorithm !== "sha512" && hashAlgorithm !== "scrypt")
+            {
+                //default hash/disgest algorithm
+                hashAlgorithm = "whirlpool";
+            }
+        
+            if(sig && hashAlgorithm && !compareSig && !compareSalt && !compareHashSig && !compareDateNow)
+            {
                 var areSigArray  = Array.isArray(sig);
                 if(areSigArray !== true) {console.log('The argument, "sig - i.e. input sig(s)", should be an array. Check, correct and try again!'); return null; }
                 if(areSigArray === true) {var sigLen = sig.length; var combinedSig = ''; var salt;}
-              
+
                 if(hashAlgorithm === "bcrypt")
                 {
-                    salt = bcrypt.genSaltSync(10);    
-                    for(var i = 0; i < sigLen; i ++) { combinedSig +=  bcrypt.hashSync(sig[i], salt); }
-                    var combinedHashSig = bcrypt.hashSync((combinedSig + dateNow), salt);   
+                        salt = bcrypt.genSaltSync(10);
+                        for(var i = 0; i < sigLen; i ++) { combinedSig +=  bcrypt.hashSync(sig[i], salt); }
+                        var combinedHashSig = bcrypt.hashSync((combinedSig + dateNow), salt);
                 }
 
                 if(hashAlgorithm === "whirlpool" || hashAlgorithm === "sha512")
                 {
-                    salt = uuidV4();           
-                    for(var i = 0; i < sigLen; i ++) { combinedSig +=  (crypto.createHmac(hashAlgorithm, salt)).update(sig[i]).digest('hex');}
-                    var combinedHashSig = (crypto.createHmac(hashAlgorithm, salt)).update(combinedSig + dateNow).digest('hex');   
+                        salt = uuidV4();
+                        for(var i = 0; i < sigLen; i ++) { combinedSig +=  (crypto.createHmac(hashAlgorithm, salt)).update(sig[i]).digest('hex');}
+                        var combinedHashSig = (crypto.createHmac(hashAlgorithm, salt)).update(combinedSig + dateNow).digest('hex');
                 }
-                
+
                 if(hashAlgorithm === "scrypt")
                 {
-                    for(var i = 0; i < sigLen; i ++){combinedSig +=  (crypto.scryptSync(sig[i], salt, 64)).toString('hex');}
-                    var combinedHashSig  = (crypto.scryptSync(combinedSig + dateNow, salt, 64)).toString('hex');
+                        for(var i = 0; i < sigLen; i ++){combinedSig +=  (crypto.scryptSync(sig[i], salt, 64)).toString('hex');}
+                        var combinedHashSig  = (crypto.scryptSync(combinedSig + dateNow, salt, 64)).toString('hex');
                 }
-           
+
                 var result = [salt, combinedHashSig, dateNow];
                 return result;
-          }
+            }
+            
 
-        if(sig && hashAlgorithm && compareSig && compareSalt && compareHashSig && compareDateNow)
-        {
+            if(sig && hashAlgorithm && compareSig && compareSalt && compareHashSig && compareDateNow)
+            {
                 var areHashesArray     = Array.isArray(compareHashSig);
                 var areCompareSigArray = Array.isArray(compareSig);
                 var areSigArray        = Array.isArray(sig);
@@ -100,10 +155,9 @@ class  EcotertCrypto
                 if(hashAlgorithm === "whirlpool" || hashAlgorithm === "sha512")
                 {
                     for(var i = 0; i < compareSigLen; i ++){combinedSigx +=  (crypto.createHmac(hashAlgorithm, compareSalt)).update(compareSig[i]).digest('hex');}
-                    var combinedHashSigx = (crypto.createHmac(hashAlgorithm, compareSalt)).update(combinedSigx + compareDateNow).digest('hex');     
+                    var combinedHashSigx = (crypto.createHmac(hashAlgorithm, compareSalt)).update(combinedSigx + compareDateNow).digest('hex');
                 }
               
-      
                 if(hashAlgorithm === "scrypt")
                 {
                     for(var i = 0; i < compareSigLen; i ++){combinedSigx +=  (crypto.scryptSync(combinedSig[i], compareSalt, 64)).toString('hex');}
@@ -111,21 +165,20 @@ class  EcotertCrypto
                 }
               
                 var count  = 0;
-                var result =  true;               
+                var result =  true;
                 for(var i = 0; i < compareHashSigLen; i ++) { if((compareHashSig[i] === combinedHashSigx) === false){count = count + 1;} }
-                if(count > 0) {result = false;}   
-            
+                if(count > 0) {result = false;}
                 return result;
               
-          }
-        else
-        {
-            console.log('Missing or incorrect one or more argument(s). Check, correct and try again!');
-            return null;
+            }
+            else
+            {
+                console.log('Missing or incorrect one or more argument(s). Check, correct and try again!');
+                return null;
+            }
         }
-    
-   }
+    }
     
 }
 
-module.exports = {EcotertCrypto};
+module.exports = {EconomicCrypto};
