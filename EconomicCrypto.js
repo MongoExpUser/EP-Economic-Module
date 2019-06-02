@@ -127,7 +127,6 @@ class  EconomicCrypto
                 if(areSigArray === true)
                 {
                     var combinedSig = "";
-                    var salt;
                 }
                 else
                 {
