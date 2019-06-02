@@ -12,7 +12,7 @@
  * Note:
  * a) SHA-512 Algorithm      : SHA-512         -----> based on node.js' crypto.createHmac() - depends on OpenSSL version
  * b) WHIRLPOOL Algorithm    : WHIRLPOOL       -----> based on node.js' crypto.createHmac() - depends on OpenSSL version
- * c) BCrypt Algorithm       : Bcrypt          -----> based on "bcryptjs" module (https://github.com/dcodeIO/bcrypt.js)
+ * c) BCrypt Algorithm       : Bcrypt          -----> based on "bcryptjs" module
  * d) SCrypt Algorithm       : Scrypt          -----> based on  node.js' crypto.scrypt()
  *
  * Node.js' crypo algorithm (for crypto.createHmac()) is dependent on the available algorithms supported by the version of OpenSSL on the platform.
@@ -66,7 +66,28 @@ class  EconomicCrypto
             return true;
         }
     }
-
+    
+    static verifyConsensus(compareHashSig, combinedHashSigx)
+    {
+        var count  = 0;
+                    
+        for(var i in compareHashSig)
+        {
+            if((compareHashSig[i] === combinedHashSigx) === false)
+            {
+                count = count + 1;
+            }
+        }
+                    
+        if(count > 0)
+        {
+            return false;
+        }
+                    
+        return true;
+    }
+    
+    
     blockchainHash(sig, hashAlgorithm, compareSig, compareSalt, compareHashSig, compareDateNow)
     {
         var showAlgorithm = false;
@@ -105,7 +126,6 @@ class  EconomicCrypto
                 
                 if(areSigArray === true)
                 {
-                    var sigLen = sig.length;
                     var combinedSig = "";
                     var salt;
                 }
@@ -119,7 +139,7 @@ class  EconomicCrypto
                 {
                     var salt = bcrypt.genSaltSync(10);
                     
-                    for(var i = 0; i < sigLen; i ++)
+                    for(var i in sig)
                     {
                         combinedSig +=  bcrypt.hashSync(sig[i].toString('hex'), salt);
                     }
@@ -131,7 +151,7 @@ class  EconomicCrypto
                 {
                     var salt = uuidV4();
                         
-                    for(var i = 0; i < sigLen; i ++)
+                    for(var i in sig)
                     {
                         combinedSig +=  (crypto.createHmac(hashAlgorithm, salt)).update(sig[i]).digest('hex');
                     }
@@ -143,7 +163,7 @@ class  EconomicCrypto
                 {
                     var salt = uuidV4();
                     
-                    for(var i = 0; i < sigLen; i ++)
+                    for(var i in sig)
                     {
                         combinedSig +=  (crypto.scryptSync(sig[i], salt, 64)).toString('hex');
                     }
@@ -170,15 +190,12 @@ class  EconomicCrypto
                 }
                 else if(allTrue === true)
                 {
-                    var compareHashSigLen = compareHashSig.length;
-                    var compareSigLen = compareSig.length;
-                    var sigLen = sig.length;
                     var combinedSigx = "";
                 }
               
                 if(hashAlgorithm === "bcrypt")
                 {
-                    for(var i = 0; i < compareSigLen; i ++)
+                    for(var i in compareSig)
                     {
                         combinedSigx +=  bcrypt.hashSync(compareSig[i].toString('hex'), compareSalt);
                     }
@@ -188,7 +205,7 @@ class  EconomicCrypto
               
                 if(hashAlgorithm === "whirlpool" || hashAlgorithm === "sha512")
                 {
-                    for(var i = 0; i < compareSigLen; i ++)
+                    for(var i in compareSig)
                     {
                         combinedSigx +=  (crypto.createHmac(hashAlgorithm, compareSalt)).update(compareSig[i]).digest('hex');
                     }
@@ -198,7 +215,7 @@ class  EconomicCrypto
               
                 if(hashAlgorithm === "scrypt")
                 {
-                    for(var i = 0; i < compareSigLen; i ++)
+                    for(var i in compareSig)
                     {
                         combinedSigx +=  (crypto.scryptSync(compareSig[i], compareSalt, 64)).toString('hex');
                     }
@@ -207,28 +224,8 @@ class  EconomicCrypto
                 }
               
               
-                function checkForConsensus()
-                {
-                    var count  = 0;
-                    var result =  true;
-                    
-                    for(var i = 0; i < compareHashSigLen; i ++)
-                    {
-                        if((compareHashSig[i] === combinedHashSigx) === false)
-                        {
-                            count = count + 1;
-                        }
-                    }
-                    
-                    if(count > 0)
-                    {
-                        result = false;
-                    }
-                    
-                    return result;
-                }
+                return EconomicCrypto.verifyConsensus(compareHashSig, combinedHashSigx);
                 
-                return checkForConsensus();
             }
             else
             {
