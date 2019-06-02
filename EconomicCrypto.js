@@ -7,12 +7,12 @@
  * @License Ends
  *
  * This module is for managing crytographic functionalities associated with "EconomicModel.js on a "Node.js Server".
- * Dependencies are: Node.js native crypto and "bcrypt-nodejs" modules.
+ * Dependencies are: Node.js native crypto and "bcryptjs" modules.
  *
  * Note:
  * a) SHA-512 Algorithm      : SHA-512         -----> based on node.js' crypto.createHmac() - depends on OpenSSL version
  * b) WHIRLPOOL Algorithm    : WHIRLPOOL       -----> based on node.js' crypto.createHmac() - depends on OpenSSL version
- * c) BCrypt Algorithm       : Bcrypt          -----> based on "bcrypt-nodejs" module
+ * c) BCrypt Algorithm       : Bcrypt          -----> based on "bcryptjs" module
  * d) SCrypt Algorithm       : Scrypt          -----> based on  node.js' crypto.scrypt()
  *
  * Node.js' crypo algorithm (for crypto.createHmac()) is dependent on the available algorithms supported by the version of OpenSSL on the platform.
@@ -28,7 +28,6 @@
  *
  */
 
-
 class  EconomicCrypto
 {
     constructor(){ }
@@ -38,8 +37,7 @@ class  EconomicCrypto
        return {
            globalPromise: require('bluebird'),
            uuidV4: require('uuid/v4'),
-           bcrypt: require("bcrypt-nodejs"),
-           fs: require('fs'),
+           bcrypt: require("bcryptjs"),
            crypto: require('crypto')
        }
     }
@@ -58,23 +56,19 @@ class  EconomicCrypto
         }
         finally
         {
-            // show (print) available hash (i.e. digest) algorithms in OpenSSL version bundled  with the current Node.js version
+            // print hash (i.e. digest) algorithms in OpenSSL version bundled  with the current Node.js version
             if(showAlgorithm == true)
             {
               var hashesAlgorithms = crypto.getHashes();
               console.log(hashesAlgorithms);
             }
+            
             return true;
         }
     }
 
     blockchainHash(sig, hashAlgorithm, compareSig, compareSalt, compareHashSig, compareDateNow)
     {
-        var commonModules = EconomicCrypto.commonModules();
-        global.Promise    = commonModules.globalPromise;
-        var uuidV4        = commonModules.uuidV4;
-        var bcrypt        = commonModules.bcrypt;
-        var fs            = commonModules.fs;
         var showAlgorithm = false;
         
         if(EconomicCrypto.isCryptoSupported(showAlgorithm) === true)
@@ -87,89 +81,154 @@ class  EconomicCrypto
    
     isHashConsensus(sig, hashAlgorithm, compareSig, compareSalt, compareHashSig, compareDateNow)
     {
+        var showAlgorithm = false;
         var commonModules = EconomicCrypto.commonModules();
         global.Promise    = commonModules.globalPromise;
         var uuidV4        = commonModules.uuidV4;
         var bcrypt        = commonModules.bcrypt;
-        var fs            = commonModules.fs;
-        var showAlgorithm = true;
+        var crypto        = commonModules.crypto;
         
         if(EconomicCrypto.isCryptoSupported(showAlgorithm) === true)
         {
             var dateNow = new Date();
+            var allAlgorithms = ["bcrypt", "whirlpool", "sha512", "scrypt"]
 
-            if(hashAlgorithm !== "bcrypt" && hashAlgorithm !== "whirlpool" && hashAlgorithm !== "sha512" && hashAlgorithm !== "scrypt")
+            if(allAlgorithms.includes(hashAlgorithm) === false)
             {
-                //default hash/disgest algorithm
+                //set default algorithm
                 hashAlgorithm = "whirlpool";
             }
-        
+            
             if(sig && hashAlgorithm && !compareSig && !compareSalt && !compareHashSig && !compareDateNow)
             {
                 var areSigArray  = Array.isArray(sig);
-                if(areSigArray !== true) {console.log('The argument, "sig - i.e. input sig(s)", should be an array. Check, correct and try again!'); return null; }
-                if(areSigArray === true) {var sigLen = sig.length; var combinedSig = ''; var salt;}
-
+                
+                if(areSigArray === true)
+                {
+                    var sigLen = sig.length;
+                    var combinedSig = "";
+                    var salt;
+                }
+                else
+                {
+                    console.log('The argument, "sig - i.e. input sig(s)", should be an array. Check, correct and try again!');
+                    return;
+                }
+                
                 if(hashAlgorithm === "bcrypt")
                 {
-                        salt = bcrypt.genSaltSync(10);
-                        for(var i = 0; i < sigLen; i ++) { combinedSig +=  bcrypt.hashSync(sig[i], salt); }
-                        var combinedHashSig = bcrypt.hashSync((combinedSig + dateNow), salt);
+                    var salt = bcrypt.genSaltSync(10);
+                    
+                    for(var i = 0; i < sigLen; i ++)
+                    {
+                        combinedSig +=  bcrypt.hashSync(sig[i].toString('hex'), salt);
+                    }
+                    
+                    var combinedHashSig = bcrypt.hashSync((combinedSig + dateNow), salt);
                 }
 
                 if(hashAlgorithm === "whirlpool" || hashAlgorithm === "sha512")
                 {
-                        salt = uuidV4();
-                        for(var i = 0; i < sigLen; i ++) { combinedSig +=  (crypto.createHmac(hashAlgorithm, salt)).update(sig[i]).digest('hex');}
-                        var combinedHashSig = (crypto.createHmac(hashAlgorithm, salt)).update(combinedSig + dateNow).digest('hex');
+                    var salt = uuidV4();
+                        
+                    for(var i = 0; i < sigLen; i ++)
+                    {
+                        combinedSig +=  (crypto.createHmac(hashAlgorithm, salt)).update(sig[i]).digest('hex');
+                    }
+                        
+                    var combinedHashSig = (crypto.createHmac(hashAlgorithm, salt)).update(combinedSig + dateNow).digest('hex');
                 }
 
                 if(hashAlgorithm === "scrypt")
                 {
-                        for(var i = 0; i < sigLen; i ++){combinedSig +=  (crypto.scryptSync(sig[i], salt, 64)).toString('hex');}
-                        var combinedHashSig  = (crypto.scryptSync(combinedSig + dateNow, salt, 64)).toString('hex');
+                    var salt = uuidV4();
+                    
+                    for(var i = 0; i < sigLen; i ++)
+                    {
+                        combinedSig +=  (crypto.scryptSync(sig[i], salt, 64)).toString('hex');
+                    }
+                        
+                    var combinedHashSig  = (crypto.scryptSync(combinedSig + dateNow, salt, 64)).toString('hex');
                 }
 
                 var result = [salt, combinedHashSig, dateNow];
+                
                 return result;
             }
-            
-
-            if(sig && hashAlgorithm && compareSig && compareSalt && compareHashSig && compareDateNow)
+            else if(sig && hashAlgorithm && compareSig && compareSalt && compareHashSig && compareDateNow)
             {
                 var areHashesArray     = Array.isArray(compareHashSig);
                 var areCompareSigArray = Array.isArray(compareSig);
                 var areSigArray        = Array.isArray(sig);
-                if(areHashesArray !== true){ console.log('The argument, "compareHashSig - i.e. hash(es) to be compared", should be an array. Check, correct and try again!');  return null;  }
-                if(areCompareSigArray !== true){ console.log('The argument, "compareSig - i.e. sig(s) to be compared", should be an array. Check, correct and try again!'); return null; }
-                if(areSigArray !== true) {console.log('The argument, "sig - i.e. input sig(s)", should be an array. Check, correct and try again!'); return null; }
-              
-                if((areHashesArray === true)  && (areCompareSigArray === true) && (areSigArray === true)) { var compareHashSigLen = compareHashSig.length; var compareSigLen = compareSig.length; var sigLen = sig.length; var combinedSigx = ''; }
+                
+                var allTrue = (areHashesArray === areCompareSigArray === areSigArray);
+                
+                if(allTrue !== true)
+                {
+                    console.log('The arguments: "sig", "compareSig" and "compareHashSig" should all be Arrays. Check, correct and try again!');
+                    return;
+                }
+                else if(allTrue === true)
+                {
+                    var compareHashSigLen = compareHashSig.length;
+                    var compareSigLen = compareSig.length;
+                    var sigLen = sig.length;
+                    var combinedSigx = "";
+                }
               
                 if(hashAlgorithm === "bcrypt")
                 {
-                    for(var i = 0; i < compareSigLen; i ++){combinedSigx +=  bcrypt.hashSync(compareSig[i], compareSalt);}
-                    var combinedHashSigx = bcrypt.hashSync((combinedSigx + compareDateNow), compareSalt);     // then hash the combined hash with timestamp
+                    for(var i = 0; i < compareSigLen; i ++)
+                    {
+                        combinedSigx +=  bcrypt.hashSync(compareSig[i].toString('hex'), compareSalt);
+                    }
+                    
+                    var combinedHashSigx = bcrypt.hashSync((combinedSigx + compareDateNow), compareSalt);
                 }
               
                 if(hashAlgorithm === "whirlpool" || hashAlgorithm === "sha512")
                 {
-                    for(var i = 0; i < compareSigLen; i ++){combinedSigx +=  (crypto.createHmac(hashAlgorithm, compareSalt)).update(compareSig[i]).digest('hex');}
+                    for(var i = 0; i < compareSigLen; i ++)
+                    {
+                        combinedSigx +=  (crypto.createHmac(hashAlgorithm, compareSalt)).update(compareSig[i]).digest('hex');
+                    }
+                    
                     var combinedHashSigx = (crypto.createHmac(hashAlgorithm, compareSalt)).update(combinedSigx + compareDateNow).digest('hex');
                 }
               
                 if(hashAlgorithm === "scrypt")
                 {
-                    for(var i = 0; i < compareSigLen; i ++){combinedSigx +=  (crypto.scryptSync(combinedSig[i], compareSalt, 64)).toString('hex');}
+                    for(var i = 0; i < compareSigLen; i ++)
+                    {
+                        combinedSigx +=  (crypto.scryptSync(compareSig[i], compareSalt, 64)).toString('hex');
+                    }
+                    
                     var combinedHashSigx  = (crypto.scryptSync(combinedSigx + compareDateNow, compareSalt, 64)).toString('hex');
                 }
               
-                var count  = 0;
-                var result =  true;
-                for(var i = 0; i < compareHashSigLen; i ++) { if((compareHashSig[i] === combinedHashSigx) === false){count = count + 1;} }
-                if(count > 0) {result = false;}
-                return result;
               
+                function checkForConsensus()
+                {
+                    var count  = 0;
+                    var result =  true;
+                    
+                    for(var i = 0; i < compareHashSigLen; i ++)
+                    {
+                        if((compareHashSig[i] === combinedHashSigx) === false)
+                        {
+                            count = count + 1;
+                        }
+                    }
+                    
+                    if(count > 0)
+                    {
+                        result = false;
+                    }
+                    
+                    return result;
+                }
+                
+                return checkForConsensus();
             }
             else
             {
@@ -178,7 +237,6 @@ class  EconomicCrypto
             }
         }
     }
-    
 }
 
 module.exports = {EconomicCrypto};
