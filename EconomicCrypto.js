@@ -173,6 +173,7 @@ class  EconomicCrypto
                 var result = [salt, combinedHashSig, dateNow];
                 
                 return result;
+                
             }
             else if(sig && hashAlgorithm && compareSig && compareSalt && compareHashSig && compareDateNow)
             {
