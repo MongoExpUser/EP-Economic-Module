@@ -293,7 +293,7 @@ var  EconomicModel = (function ecoModel()
                     ///* using addons methods (V8 or NAPI)
                     EFT26[i] = addonEco.IRR(EFT21);                                                           // undiscounted IRR = internal rate of return (% or fraction)
                     EFT27[i] = addonEco.IRR(EFT24);                                                           // discounted IRR (% or fraction)
-                    EFT28[i] = EFT24[i]/addonEco.maximumOfDoubleArrayValues(EFT15);                           // VIR/PI = value investment ratio/profitability index or indicator (ratio)
+                    EFT28[i] = EFT24[i]/Math.max(...EFT15)                                                    // VIR/PI = value investment ratio/profitability index or indicator (ratio)
                 }
 
             }
