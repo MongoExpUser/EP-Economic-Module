@@ -1,32 +1,42 @@
-/* @License Starts
- *
- * Copyright © 2015 - present. MongoExpUser
- *
- * License: MIT - See: https://github.com/MongoExpUser/EP-Economic-Module/blob/master/LICENSE
- *
- * @License Ends
- *
- * This module is for managing crytographic functionalities associated with "EconomicModel.js on a "Node.js Server".
- * Dependencies are: Node.js native crypto and "bcryptjs" modules.
- *
- * Note:
- * a) SHA-512 Algorithm      : SHA-512         -----> based on node.js' crypto.createHmac() - depends on OpenSSL version
- * b) WHIRLPOOL Algorithm    : WHIRLPOOL       -----> based on node.js' crypto.createHmac() - depends on OpenSSL version
- * c) BCrypt Algorithm       : Bcrypt          -----> based on "bcryptjs" module (https://github.com/dcodeIO/bcrypt.js)
- * d) SCrypt Algorithm       : Scrypt          -----> based on  node.js' crypto.scrypt()
- *
- * Node.js' crypo algorithm (for crypto.createHmac()) is dependent on the available algorithms supported by the version of OpenSSL on the platform.
- *
- * To check available crypo algorithms (for crypto.createHmac()):
- *
- * Option 1 - Within Node.js application file:
- *   var crypto = require('crypto');
- *   console.log(crypto.getHashes());
- *
- * Option 2 - On Ubuntu/Linux. From shell, run:
- *   openssl list -digest-algorithms
- *
- */
+/*
+# ****************************************************************************************************************
+# *                                                                                                              *
+# *  @License Starts.                                                                                            *
+# *                                                                                                              *
+# *  Copyright © 2015 - present. MongoExpUser                                                                    *
+# *                                                                                                              *
+# *  License: MIT - See: https://github.com/MongoExpUser/EP-Economic-Module/blob/master/LICENSE                  *
+# *                                                                                                              *
+# *  @License Ends                                                                                               *
+# *                                                                                                              *
+# *  1) The module implements a Crypto class of:                                                                 *
+# *     a) Crytographic functionalities on a nodejs server                                                       *
+# *  2) The implementation is done with the following Node.js packages                                           *
+# *     (a) nodejs native crypto - https://nodejs.org/api/crypto.html                                            *
+# *     (b) bcryptjs  - https://www.npmjs.com/package/bcryptjs                                                   *
+# *                                                                                                              *
+# ****************************************************************************************************************
+# * Note:                                                                                                        *
+# * a) SHA-512 Algorithm      : SHA-512   --> based on node.js' crypto.createHmac() - depends on OpenSSL version *
+# * b) WHIRLPOOL Algorithm    : WHIRLPOOL --> based on node.js' crypto.createHmac() - depends on OpenSSL version *
+# * c) BCrypt Algorithm       : Bcrypt    --> based on "bcryptjs" module (https://github.com/dcodeIO/bcrypt.js)  *
+# * d) SCrypt Algorithm       : Scrypt    --> based on  node.js' crypto.scrypt()                                 *
+# *                                                                                                              *
+# * Node.js' crypo algorithm (for crypto.createHmac()) is dependent on the available algorithms supported by     *
+# * the version of OpenSSL on the platform.                                                                      *
+# * To check available crypo algorithms (for crypto.createHmac()):                                               *
+# *                                                                                                              *
+# * Option 1 - Within Node.js application file:                                                                  *
+# *   const crypto = require('crypto');                                                                          *
+# *   console.log(crypto.getHashes());                                                                           *
+# *                                                                                                              *
+# * Option 2 - On Ubuntu/Linux. From shell, run:                                                                 *
+# *   openssl list -digest-algorithms                                                                            *
+# *                                                                                                              *
+# *                                                                                                              *
+# ****************************************************************************************************************
+*/
+
 
 class  EconomicCrypto
 {
