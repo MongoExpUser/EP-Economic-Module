@@ -15,7 +15,7 @@
 # *     (a) nodejs native crypto - https://nodejs.org/api/crypto.html                                            *
 # *     (b) bcryptjs  - https://www.npmjs.com/package/bcryptjs                                                   *
 # *     (c) uuid - https://www.npmjs.com/package/uuid                                                            *
-# *  3) The code was updated and tested with Node 19.x on January 28, 23                                         *
+# *  3) The code was updated and tested with Node 19.x on January 28, 2023                                       *
 # ****************************************************************************************************************
 # * Note:                                                                                                        *
 # * a) SHA-512 Algorithm      : SHA-512   --> based on node.js' crypto.createHmac() - depends on OpenSSL version *
