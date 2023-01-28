@@ -249,13 +249,8 @@ class Crypto
                     
                     combinedHashSigx  = (crypto.scryptSync(combinedSigx + compareDateNow, compareSalt, 64)).toString('hex');
                 }
-              
-              
-                console.log("compareHashSig: ", compareHashSig);
-                console.log("combinedHashSigx: ", combinedHashSigx);
-                return Crypto.verifyConsensus(compareHashSig, combinedHashSigx);
 
-                
+                return Crypto.verifyConsensus(compareHashSig, combinedHashSigx); 
             }
             else
             {
